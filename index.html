@@ -4,10 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>TerraCore · Профиль</title>
-    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         body {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
             background: #0a0f0d;
@@ -17,7 +16,6 @@
         }
         .screen {
             transition: opacity 0.2s ease, transform 0.2s ease;
-            will-change: transform, opacity;
         }
         .screen-hidden {
             opacity: 0; pointer-events: none; transform: translateY(8px);
@@ -41,23 +39,29 @@
         .btn-primary:hover { background: #3b6b4f; }
         .btn-login-dark { background: #1e3d2b; transition: background 0.2s; }
         .btn-login-dark:hover { background: #254f34; }
-        .brand-leaf {
-            animation: gentle-sway 3s ease-in-out infinite;
-            transform-origin: bottom center;
-        }
-        @keyframes gentle-sway {
-            0%, 100% { transform: rotate(0deg); }
-            50% { transform: rotate(2deg); }
-        }
-        .brand-text {
-            background: linear-gradient(to right, #b1cfb1, #7ba07b);
+        /* Логотип TC */
+        .logo-tc {
+            font-weight: 800;
+            font-size: 1.8rem;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, #b1cfb1 0%, #4a7a4a 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 0 10px rgba(45, 90, 63, 0.4);
+            filter: drop-shadow(0 0 10px rgba(45, 90, 63, 0.6));
+            position: relative;
+            display: inline-block;
         }
-        /* предотвращаем возможные проблемы с Tailwind */
-        .relative { position: relative; }
+        .logo-tc::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 5%;
+            width: 90%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #2d5a3f, transparent);
+            border-radius: 2px;
+        }
     </style>
 </head>
 <body class="bg-[#0a0f0d] text-gray-200 h-screen flex flex-col overflow-hidden">
@@ -73,32 +77,26 @@
 
     <main class="flex-1 relative overflow-y-auto custom-scroll pb-20" id="main-content">
 
-        <!-- Главный экран (пустой, только шапка) -->
+        <!-- Главный экран (пустой, только шапка TC) -->
         <div id="home-screen" class="screen screen-visible flex flex-col h-full p-4 relative">
-            <!-- Шапка TerraCore с листиком слева наравне с текстом -->
-            <div class="absolute top-4 left-4 z-10 flex items-center gap-2 select-none">
-                <svg class="brand-leaf w-6 h-6 text-[#2d5a3f]" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2c-1.5 2-3 4.5-3 8 0 3 1.5 5.5 3 7.5 1.5-2 3-4.5 3-7.5 0-3.5-1.5-6-3-8zm0 0c-3 1-5 3.5-5 7s2 6.5 5 9c3-2.5 5-5.5 5-9s-2-6-5-7z" opacity="0.8"/>
-                    <path d="M12 2c-1 2-2 4-2 7s1 5 2 7.5c1-2.5 2-5.5 2-7.5s-1-5-2-7z" fill="#b1cfb1"/>
-                </svg>
-                <span class="brand-text text-lg font-bold tracking-wider">TerraCore</span>
+            <div class="absolute top-4 left-4 z-10 flex items-center select-none">
+                <span class="logo-tc">TC</span>
             </div>
-            <!-- Пустота, ничего больше -->
         </div>
 
-        <!-- Профиль -->
-        <div id="profile-screen" class="screen screen-hidden flex flex-col h-full p-4">
-            <div id="profile-gate" class="flex flex-col items-center space-y-5 pt-2">
-                <div class="w-20 h-20 rounded-full bg-[#1a2320] flex items-center justify-center">
-                    <span class="text-4xl text-[#2d5a3f]">◉</span>
+        <!-- Профиль (все элементы строго вверху) -->
+        <div id="profile-screen" class="screen screen-hidden flex flex-col h-full px-4 pb-4" style="padding-top: 0.5rem;">
+            <div id="profile-gate" class="flex flex-col items-center space-y-2 mt-0">
+                <div class="w-12 h-12 rounded-full bg-[#1a2320] flex items-center justify-center">
+                    <span class="text-2xl text-[#2d5a3f]">◉</span>
                 </div>
-                <p class="text-sm text-gray-400 text-center px-4">Авторизуйтесь, чтобы увидеть профиль.</p>
+                <p class="text-xs text-gray-400 text-center px-4">Авторизуйтесь, чтобы увидеть профиль</p>
                 <button id="profile-auth-btn"
-                        class="w-full max-w-xs py-3 btn-primary text-white font-medium rounded-full active:scale-95 transition-transform shadow-lg">
+                        class="w-full max-w-xs py-3 btn-primary text-white font-medium rounded-full active:scale-95 transition-transform shadow-lg text-sm">
                     Войти / Зарегистрироваться
                 </button>
             </div>
-            <div id="profile-authorized" class="hidden flex-col pt-2">
+            <div id="profile-authorized" class="hidden flex-col mt-1">
                 <div class="flex items-center gap-4 mb-8">
                     <div id="profile-avatar" class="avatar-circle w-16 h-16 text-2xl"></div>
                     <div>
@@ -132,13 +130,11 @@
 
 <script>
 (function() {
-    // Хранилище
     const STORAGE_USERS = 'app_users';
     const STORAGE_CURRENT_USER = 'app_current_user';
 
     let users = [];
     let currentUser = null;
-
     try {
         users = JSON.parse(localStorage.getItem(STORAGE_USERS) || '[]');
         currentUser = JSON.parse(localStorage.getItem(STORAGE_CURRENT_USER) || 'null');
@@ -147,7 +143,6 @@
         currentUser = null;
     }
 
-    // DOM элементы
     const $ = (sel) => document.querySelector(sel);
     const homeScreen = $('#home-screen');
     const profileScreen = $('#profile-screen');
@@ -158,7 +153,6 @@
     const modalOverlay = $('#modal-overlay');
     const modalContent = $('#modal-content');
 
-    // Утилиты
     function saveUsers() { localStorage.setItem(STORAGE_USERS, JSON.stringify(users)); }
     function saveCurrentUser() {
         if (currentUser) localStorage.setItem(STORAGE_CURRENT_USER, JSON.stringify(currentUser));
@@ -180,17 +174,14 @@
 
     function showTab(tab) {
         const isHome = tab === 'home';
-        // Переключение видимости экранов
         homeScreen.classList.toggle('screen-hidden', !isHome);
         homeScreen.classList.toggle('screen-visible', isHome);
         profileScreen.classList.toggle('screen-hidden', isHome);
         profileScreen.classList.toggle('screen-visible', !isHome);
-        // Подсветка кнопок навигации
         tabHome.classList.toggle('nav-btn-active', isHome);
         tabHome.classList.toggle('text-gray-400', !isHome);
         tabProfile.classList.toggle('nav-btn-active', !isHome);
         tabProfile.classList.toggle('text-gray-400', isHome);
-        // Не вызываем updateAllUI без необходимости
     }
 
     tabHome.addEventListener('click', () => showTab('home'));
@@ -200,7 +191,6 @@
     function openModal(html) {
         modalContent.innerHTML = html;
         modalOverlay.classList.remove('hidden');
-        // Активируем кнопки глаз
         document.querySelectorAll('.toggle-password-btn').forEach(btn => {
             btn.innerHTML = eyeClosedSVG;
         });
@@ -209,19 +199,16 @@
         modalOverlay.classList.add('hidden');
         modalContent.innerHTML = '';
     }
-
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) closeModal();
     });
 
-    // Делегирование событий в модалке (только один обработчик)
     modalContent.addEventListener('click', (e) => {
         const btn = e.target.closest('button');
         if (!btn) return;
         const action = btn.dataset.action;
         if (!action) return;
         e.stopPropagation();
-
         switch(action) {
             case 'register': showRegisterStep1(); break;
             case 'login': showLoginForm(); break;
@@ -246,11 +233,9 @@
         }
     });
 
-    // SVG иконки глаза (тёмно-зелёные, контур)
     const eyeOpenSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>`;
     const eyeClosedSVG = `<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l18 18"/></svg>`;
 
-    // Формы
     function showAuthChoice() {
         openModal(`
             <h3 class="text-xl font-bold text-white mb-4">Добро пожаловать</h3>
@@ -335,7 +320,6 @@
         saveCurrentUser();
         closeModal();
         updateAllUI();
-        // Переключаемся на профиль автоматически
         showTab('profile');
     }
 
@@ -364,7 +348,6 @@
         showTab('profile');
     }
 
-    // Обработчики на кнопки вне модалки
     $('#profile-auth-btn').addEventListener('click', showAuthChoice);
     $('#logout-btn').addEventListener('click', () => {
         if (confirm('Выйти из профиля?')) {
@@ -375,7 +358,6 @@
         }
     });
 
-    // Запуск
     updateAllUI();
     showTab('home');
 })();
